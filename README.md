@@ -19,4 +19,4 @@ $ aws dynamodb get-item --table-name <table name> --key <key> | jq  '.Item' | dy
 
 ## Option
 
-<code>-f</code> option specifies the json format to be input (json or djson)
+<code>-f</code> option specifies the json format to be input json or djson (default is djson)
