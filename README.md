@@ -7,7 +7,7 @@ https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CapacityUnitCal
 # Install
 
 ```
-$ go install github.com/yyamanoi1222/dynamodb-item-size-calculator@latest
+$ go install github.com/yyamanoi1222/dynamodb-item-size-calculator/cmd/dynamodb-item-size-calculator@latest
 ```
 
 # Usage

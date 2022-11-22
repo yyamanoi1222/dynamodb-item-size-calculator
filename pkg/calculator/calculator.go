@@ -1,4 +1,4 @@
-package main
+package calculator
 
 import (
   "encoding/base64"
@@ -11,15 +11,15 @@ const list_overhead = 1
 const list_base_size = 3
 
 type Calculator struct {
-  totalSize int
-  item map[string]interface{}
+  TotalSize int
+  Item map[string]interface{}
 }
 
 func (c *Calculator) Calculate() {
-  for k, v := range c.item {
+  for k, v := range c.Item {
     attr := v.(map[string]interface{})
 
-    c.totalSize += len(k)
+    c.TotalSize += len(k)
     c.calculateAttr(attr)
   }
 }
@@ -101,11 +101,11 @@ func (c *Calculator) calculateNum(v string) {
   if b > 21 {
     b = 21
   }
-  c.totalSize += b
+  c.TotalSize += b
 }
 
 func (c *Calculator) calculateStr(v string) {
-  c.totalSize += len(v)
+  c.TotalSize += len(v)
 }
 
 func (c *Calculator) calculateBin(v string) {
@@ -113,34 +113,34 @@ func (c *Calculator) calculateBin(v string) {
   if err != nil {
     os.Exit(1)
   }
-  c.totalSize += len(dec)
+  c.TotalSize += len(dec)
 }
 
 func (c *Calculator) calculateList(v []interface{}) {
-  c.totalSize += list_base_size
+  c.TotalSize += list_base_size
   for _, value := range v {
     c.calculateAttr(value.(map[string]interface{}))
-    c.totalSize += list_overhead
+    c.TotalSize += list_overhead
   }
 }
 
 func (c *Calculator) calculateMap(v map[string]interface{}) {
-  c.totalSize += list_base_size
+  c.TotalSize += list_base_size
   for k, v := range v {
     attr := v.(map[string]interface{})
 
-    c.totalSize += len(k)
+    c.TotalSize += len(k)
     c.calculateAttr(attr)
-    c.totalSize += list_overhead
+    c.TotalSize += list_overhead
   }
 }
 
 func (c *Calculator) calculateBool() {
-  c.totalSize += 1
+  c.TotalSize += 1
 }
 
 func (c *Calculator) calculateNull() {
-  c.totalSize += 1
+  c.TotalSize += 1
 }
 
 func (c *Calculator) calculateStrSet(v []interface{}) {

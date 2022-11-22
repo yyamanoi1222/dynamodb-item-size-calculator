@@ -7,6 +7,7 @@ import (
   "encoding/json"
   "flag"
   "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+  "github.com/yyamanoi1222/dynamodb-item-size-calculator/pkg/calculator"
 )
 
 func main() {
@@ -22,10 +23,10 @@ func main() {
 
   data := parseInput(format)
 
-  c := &Calculator{item: data}
+  c := &calculator.Calculator{Item: data}
   c.Calculate()
 
-  fmt.Printf("itemSize: %vbytes", c.totalSize)
+  fmt.Printf("itemSize: %vbytes", c.TotalSize)
 }
 
 func parseInput(format string) map[string]interface{} {
@@ -37,7 +38,10 @@ func parseInput(format string) map[string]interface{} {
     jsonStr += sc.Text()
   }
 
-  json.Unmarshal([]byte(jsonStr), &data)
+  if err := json.Unmarshal([]byte(jsonStr), &data); err != nil {
+      fmt.Fprintf(os.Stderr, "invalid input format \n")
+      os.Exit(1)
+  }
 
   if format != "djson" {
     r, err := dynamodbattribute.MarshalMap(data)
