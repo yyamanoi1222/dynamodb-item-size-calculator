@@ -1,5 +1,5 @@
 # dynamodb-item-size-calculator
-CLI tool for calculating dynamodb item size.
+CLI tool for calculating dynamodb item size and capacity unit.
 
 Calculation result is based on this.
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CapacityUnitCalculations.html
