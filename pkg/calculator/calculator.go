@@ -12,7 +12,26 @@ const list_base_size = 3
 
 type Calculator struct {
   TotalSize int
+  CapacityUnit CapacityUnit
   Item map[string]interface{}
+}
+
+type CapacityUnit struct {
+  Read int
+  ConsistentRead float64
+  TransactionRead int
+  Write int
+  TransactionWrite int
+}
+
+func (c *Calculator) CalculateCapacityUnit() {
+  c.CapacityUnit  = CapacityUnit{
+    Read: int(math.Ceil(float64(c.TotalSize) / float64(4096))),
+    ConsistentRead: (math.Ceil(float64(c.TotalSize) / float64(4096))) * 0.5,
+    TransactionRead: int(math.Ceil(float64(c.TotalSize) / float64(4096))) * 2,
+    Write: int(math.Ceil(float64(c.TotalSize) / float64(1024))),
+    TransactionWrite: int(math.Ceil(float64(c.TotalSize) / float64(1024))) * 2,
+  }
 }
 
 func (c *Calculator) Calculate() {
@@ -22,6 +41,7 @@ func (c *Calculator) Calculate() {
     c.TotalSize += len(k)
     c.calculateAttr(attr)
   }
+  c.CalculateCapacityUnit()
 }
 
 func (c * Calculator) calculateAttr(attr map[string]interface{}) {

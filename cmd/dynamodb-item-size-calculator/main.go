@@ -26,7 +26,12 @@ func main() {
   c := &calculator.Calculator{Item: data}
   c.Calculate()
 
-  fmt.Printf("itemSize: %vbytes", c.TotalSize)
+  fmt.Printf("itemSize: %vbytes\n", c.TotalSize)
+  fmt.Printf("RCU: %v\n", c.CapacityUnit.Read)
+  fmt.Printf("RCU (consistent): %v\n", c.CapacityUnit.ConsistentRead)
+  fmt.Printf("RCU (transaction): %v\n", c.CapacityUnit.TransactionRead)
+  fmt.Printf("WCU: %v\n", c.CapacityUnit.Write)
+  fmt.Printf("WCU (transaction): %v\n", c.CapacityUnit.TransactionWrite)
 }
 
 func parseInput(format string) map[string]interface{} {
