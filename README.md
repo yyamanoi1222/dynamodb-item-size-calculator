@@ -5,10 +5,14 @@ Calculation result is based on this.
 https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/CapacityUnitCalculations.html
 
 # Install
-
+### Using Go
 ```
 $ go install github.com/yyamanoi1222/dynamodb-item-size-calculator/cmd/dynamodb-item-size-calculator@latest
 ```
+
+### From release
+https://github.com/yyamanoi1222/dynamodb-item-size-calculator/releases  
+Download the appropriate binary
 
 # Usage
 Item size can be calculated by passing dynamodb json as stdin
