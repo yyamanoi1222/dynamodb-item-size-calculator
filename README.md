@@ -19,8 +19,15 @@ Item size can be calculated by passing dynamodb json as stdin
 
 ```
 $ aws dynamodb get-item --table-name <table name> --key <key> | jq  '.Item' | dynamodb-item-size-calculator -f djson
+itemSize: 70bytes
+RCU: 1
+RCU (consistent): 0.5
+RCU (transaction): 2
+WCU: 1
+WCU (transaction): 2
+
 ```
 
 ## Option
 
-<code>-f</code> option specifies the json format to be input json or djson (default is djson)
+<code>-f</code> option specifies the json format to be input json or djson(dynamodb json) (default is djson)
