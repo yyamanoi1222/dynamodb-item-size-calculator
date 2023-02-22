@@ -43,6 +43,11 @@ func parseInput(format string) map[string]interface{} {
     jsonStr += sc.Text()
   }
 
+  if err := sc.Err(); err != nil {
+    fmt.Fprintf(os.Stderr, "err: %s \n", err)
+    os.Exit(1)
+  }
+
   if err := json.Unmarshal([]byte(jsonStr), &data); err != nil {
       fmt.Fprintf(os.Stderr, "invalid input format \n")
       os.Exit(1)
