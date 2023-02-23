@@ -5,6 +5,7 @@ import (
   "bufio"
   "os"
   "encoding/json"
+  "io/ioutil"
   "flag"
   "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
   "github.com/yyamanoi1222/dynamodb-item-size-calculator/pkg/calculator"
@@ -37,15 +38,24 @@ func main() {
 func parseInput(format string) map[string]interface{} {
   var jsonStr string
   var data map[string]interface{}
-  sc := bufio.NewScanner(os.Stdin)
 
-  for sc.Scan() {
-    jsonStr += sc.Text()
-  }
+  if args := flag.Args(); len(args) > 0 {
+    bytes, err := ioutil.ReadFile(args[0])
+    if err != nil {
+      fmt.Fprintf(os.Stderr, "%s \n", err)
+      os.Exit(1)
+    }
+    jsonStr = string(bytes)
+  } else {
+    sc := bufio.NewScanner(os.Stdin)
+    for sc.Scan() {
+      jsonStr += sc.Text()
+    }
 
-  if err := sc.Err(); err != nil {
-    fmt.Fprintf(os.Stderr, "err: %s \n", err)
-    os.Exit(1)
+    if err := sc.Err(); err != nil {
+      fmt.Fprintf(os.Stderr, "err: %s \n", err)
+      os.Exit(1)
+    }
   }
 
   if err := json.Unmarshal([]byte(jsonStr), &data); err != nil {
